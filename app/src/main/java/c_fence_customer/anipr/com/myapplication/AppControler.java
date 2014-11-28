@@ -12,7 +12,9 @@ import com.parse.PushService;
 import com.parse.SaveCallback;
 
 public class AppControler extends Application{
-	@Override
+
+    //From Laptop
+    @Override
 	public void onCreate() {
 		super.onCreate();
 		Log.d("appcontroler", "running");
