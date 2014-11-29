@@ -13,7 +13,7 @@ import com.parse.SaveCallback;
 
 public class AppControler extends Application{
 
-    //From Laptop 2nd
+    //From Laptop
     @Override
 	public void onCreate() {
 		super.onCreate();
