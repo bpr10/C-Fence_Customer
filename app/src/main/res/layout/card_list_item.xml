@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/card_background"
+    android:background="@drawable/background_card"
+    android:descendantFocusability="blocksDescendants"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -11,19 +12,22 @@
    
     <ImageView
         android:id="@+id/card_logo"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/visa" />
 
 
-     <android.support.v7.widget.SwitchCompat
+     <ImageView
          android:id="@+id/card_switch"
          android:layout_width="wrap_content"
-         android:layout_height="30dp"
+         android:layout_height="50dp"
          android:layout_alignParentRight="true"
          android:layout_alignParentTop="true"
+         android:paddingRight = "20dp"
+         android:src="@drawable/on_button"
+         android:scaleType="center"
          android:layout_alignTop="@+id/card_logo"
          android:textColor="@android:color/white"  />
 
@@ -44,7 +48,7 @@
         android:layout_alignBottom="@+id/holder_name"
         android:layout_alignParentRight="true"
         android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/holder_name"
@@ -54,6 +58,6 @@
         android:layout_below="@+id/card_no"
         android:layout_marginTop="5dp"
         android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

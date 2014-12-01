@@ -6,12 +6,12 @@
         android:id="@+id/action_change_password"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="Chanage Password"/>
+        android:title="Change Password"/>
         <item
         android:id="@+id/action_change_mobile"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="Chanage Mobile-No."/>
+        android:title="Change Mobile-No."/>
 		<item
         android:id="@+id/action_logout"
         android:orderInCategory="100"

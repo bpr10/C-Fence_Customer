@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    >
+
+    TextView
+        android:id="@+id/text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="27/4/2018 11:30AM"
+        android:textAppearance="?android:attr/textAppearance"
+        />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/text3"
+        android:text="Purchase"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/text4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/text3"
+        android:layout_below="@+id/text3"
+        android:text="27/11/2014  11.30am  USD 52"
+        android:textAppearance="?android:attr/textAppearance"/>
+
+    <TextView
+        android:id="@+id/text5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text4"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignLeft="@+id/textView9"
+        android:layout_alignParentRight="true"
+        android:textAppearance="?android:attr/textAppearance"
+        android:text="891-FOOD and BEVERAGE" />
+
+    TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/text3"
+        android:layout_below="@+id/text4"
+        android:textAppearance="?android:attr/textAppearance"
+        android:text="Amount" />
+
+    TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView20"
+        android:layout_alignBottom="@+id/textView20"
+        android:textAppearance="?android:attr/textAppearance"
+        android:layout_alignLeft="@+id/text5"
+        android:layout_alignParentRight="true"
+        android:text="1,200.00" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/text8"
+        android:text="Purchase"
+        android:layout_marginTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    TextView
+        android:id="@+id/text9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text8"
+        android:textAppearance="?android:attr/textAppearance"
+        android:layout_marginTop="10dp"
+        android:text="27/4/2018 11:30AM" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView22"
+        android:text = "21/10/2014  09.30am  USD 12"
+        android:textAppearance="?android:attr/textAppearance"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shopper's Stop"
+        android:id="@+id/textView4"
+        android:textAppearance="?android:attr/textAppearance"/>
+
+    <TextView
+        android:id="@+id/text11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/text3"
+        android:layout_marginTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/text9"
+        android:text="Purchase" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView21"
+        android:layout_alignParentRight="true"
+        android:textAppearance="?android:attr/textAppearance"
+        android:layout_below="@+id/textView23"
+        android:text="25/11/2014  09.20am  USD 22" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/text11"
+        android:textAppearance="?android:attr/textAppearance"
+        android:layout_below="@+id/text11"
+        android:text="891-FOOD and BEVERAGE" />
+
+</LinearLayout>

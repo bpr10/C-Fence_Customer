@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:text="Kishore Sawant +91-9876543210"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/text_blue"
         android:textStyle="bold" />
 
@@ -47,7 +47,7 @@
         android:layout_alignLeft="@+id/user_name"
         android:layout_below="@+id/user_name"
         android:layout_marginTop="11dp"
-        android:text="DASHBOARD"
+        android:text="My Cards"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/my_awesome_color"
         android:textStyle="bold" />

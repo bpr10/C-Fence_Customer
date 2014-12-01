@@ -21,7 +21,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 public class MainActivity extends ActionBarActivity {
-    EditText mobileNo,otp,otp1;
+    EditText mobileNo,otp;
     CheckBox check ;
     Button signIn,forgotPwd;
     private ProgressDialog pDialog;
@@ -32,7 +32,6 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         mobileNo = (EditText)findViewById(R.id.phone_no);
         otp = (EditText)findViewById(R.id.otp);
-        otp1 = (EditText)findViewById(R.id.otp1);
         check = (CheckBox)findViewById(R.id.checkBox1);
         signIn = (Button)findViewById(R.id.sign_in);
         forgotPwd = (Button)findViewById(R.id.forgot_pwd);
@@ -42,8 +41,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if((mobileNo.getText().toString().length()!=0)&&(otp.getText().toString().length()!=0)){
-                    if(otp1.getText().toString().equals(otp.getText().toString())){
-                        if(check.isChecked()){
+                         if(check.isChecked()){
                             pDialog = new ProgressDialog(MainActivity.this);
                             pDialog.setMessage("Please wait...");
                             pDialog.setCancelable(false);
@@ -63,7 +61,7 @@ public class MainActivity extends ActionBarActivity {
                                                 MainActivity.this);
                                         bulider.setMessage(
                                                 "Invalid Credentials")
-                                                .setTitle("POS Response")
+                                                .setTitle("Response")
                                                 .setPositiveButton("ok", null);
                                         AlertDialog dialog = bulider.create();
                                         dialog.show();
@@ -77,9 +75,6 @@ public class MainActivity extends ActionBarActivity {
                         }
 
 
-                    }else {
-                        Toast.makeText(getApplicationContext(), "OTP doesn't match.", Toast.LENGTH_SHORT).show();
-                    }
 
                 }else{
                     Toast.makeText(getApplicationContext(), "Fill Up all the Fields", Toast.LENGTH_SHORT).show();

@@ -25,7 +25,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -50,7 +52,7 @@ public class Home extends ActionBarActivity {
 	AlertDialog.Builder bulider;
 	ParseObject card_obj;
 	boolean status;
-	private String TAG = getClass().getSimpleName();
+	private String TAG = "Home";
 	private ProgressDialog pDialog;
 	@Override
 	protected void onStart() {
@@ -105,7 +107,14 @@ public class Home extends ActionBarActivity {
 						String holderName = mCard.getString("user");
 						String expiery = mCard.getCreatedAt().toString()
 								.substring(4, 10);
-						String company = "visa";
+                        String company = "visa";
+                        if(String.valueOf(cardNo).startsWith("4"))
+                        {
+                            company = "visa";
+                        }else{
+                            company = "mastercard";
+                        }
+
 						boolean status = mCard.getBoolean("status");
 						cards.add(new Card(cardNo, holderName, "Exp :"
 								+ expiery, company, status));
@@ -128,11 +137,21 @@ public class Home extends ActionBarActivity {
 				}
 			}
 		});
-		
+		cardsList.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent (Home.this,CardDetails.class);
+                i.putExtra("cardno",String.valueOf(cards.get(position).cardNo));
+                i.putExtra("company",cards.get(position).company);
+                i.putExtra("exp",cards.get(position).expiery);
+
+                startActivity(i);
+            }
+        });
 	}
 
 	class CardsAdapter extends BaseAdapter {
-        SwitchCompat mSwitch;
+        ImageView mSwitch;
 
 		@Override
 		public int getCount() {
@@ -158,12 +177,13 @@ public class Home extends ActionBarActivity {
 						R.layout.card_list_item, null);
 			}
 			Card currentCard = cards.get(arg0);
-			mSwitch = (SwitchCompat) convertView.findViewById(R.id.card_switch);
-           mSwitch.setChecked(currentCard.isStatus());
+			mSwitch = (ImageView) convertView.findViewById(R.id.card_switch);
 			if(currentCard.isStatus()){
-				mSwitch.setHighlightColor(getResources().getColor(R.color.text_red));
+                convertView.setBackgroundColor(getResources().getColor(R.color.card_bg_green));
+				mSwitch.setImageResource(R.drawable.on_button);
 			}else{
-				mSwitch.setHighlightColor(getResources().getColor(R.color.green));
+                convertView.setBackgroundColor(getResources().getColor(R.color.card_bg_red));
+				mSwitch.setImageResource(R.drawable.off_button);
 			}
 			TextView cardNo = (TextView) convertView.findViewById(R.id.card_no);
 			cardNo.setText("************"
@@ -174,7 +194,13 @@ public class Home extends ActionBarActivity {
 			TextView expiery = (TextView) convertView
 					.findViewById(R.id.expiery);
 			expiery.setText(currentCard.expiery);
-
+            ImageView cardLogo = (ImageView)convertView.findViewById(R.id.card_logo);
+            if(currentCard.company.equals("visa"))
+            {
+                cardLogo.setImageResource(R.drawable.visa);
+            }else{
+                cardLogo.setImageResource(R.drawable.mastercard);
+            }
 			mSwitch.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -240,7 +266,7 @@ public class Home extends ActionBarActivity {
 														passwordBulider
 																.setTitle("PASSWORD");
 														passwordBulider
-																.setMessage("Enter OTP");
+																.setMessage("Enter Password");
 														final EditText input = new EditText(
 																Home.this);
 														input.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -307,12 +333,15 @@ public class Home extends ActionBarActivity {
 																						pDialog.dismiss();
 																					}
 																					status = false;
-																					mSwitch.setChecked(false);
-																					Toast.makeText(
-																							Home.this,
-																							"Wrong Password",
-																							Toast.LENGTH_SHORT)
-																							.show();
+																					mSwitch.setImageResource(R.drawable.off_button);
+                                                                                    AlertDialog.Builder bulider = new AlertDialog.Builder(
+                                                                                            Home.this);
+                                                                                    bulider.setMessage(
+                                                                                            "Wrong Password")
+                                                                                            .setTitle("Card not activated")
+                                                                                            .setPositiveButton("ok", null);
+                                                                                    AlertDialog dialog1 = bulider.create();
+                                                                                    dialog1.show();
 																					Log.d(TAG,
 																							"set to False");
 
@@ -343,14 +372,17 @@ public class Home extends ActionBarActivity {
 
 				}
 			});
-			convertView.setOnClickListener(new OnClickListener() {
+			/*convertView.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
+                    int position = cardsList.getPositionForView((View) v
+                            .getParent());
+                    Toast.makeText(Home.this,position+"",Toast.LENGTH_SHORT).show();
 					Intent i = new Intent (Home.this,CardDetails.class);
 					startActivity(i);
 				}
-			});
+			});*/
 			return convertView;
 		}
 

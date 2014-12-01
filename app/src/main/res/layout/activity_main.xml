@@ -27,7 +27,7 @@
         android:layout_alignRight="@+id/textView1"
         android:layout_below="@+id/textView2"
         android:layout_marginTop="15dp"
-        android:background="#E9E8F8"
+        android:background="@color/edit_text_bg"
         android:ems="10"
         android:hint="Please enter the registered mobile number  "
         android:inputType="number"
@@ -42,35 +42,24 @@
         android:layout_alignRight="@+id/phone_no"
         android:layout_below="@+id/phone_no"
         android:layout_marginTop="15dp"
-        android:background="#E9E8F8"
+        android:background="@color/edit_text_bg"
         android:ems="10"
-        android:hint="Please enter the OTP recieved in SMS "
-        android:inputType="number"
+        android:hint="Password "
+        android:inputType="textPassword"
         android:padding="5dp" />
 
-    <EditText
-        android:id="@+id/otp1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/phone_no"
-        android:layout_alignRight="@+id/phone_no"
-        android:layout_below="@+id/otp"
-        android:layout_marginTop="15dp"
-        android:background="#E9E8F8"
-        android:ems="10"
-        android:hint="Confirm OTP"
-        android:inputType="number"
-        android:padding="5dp" />
+
 
     <Button
         android:id="@+id/sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/otp1"
+        android:layout_alignLeft="@+id/otp"
         android:layout_below="@+id/checkBox1"
         android:layout_marginTop="5dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
+        android:elevation="20dp"
         android:text="Sign In" />
 
     <Button
@@ -92,14 +81,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView1"
-        android:text="Please Enter the OTP sent to you by SMS" />
+        android:text="Please Enter your login credentials " />
 
     <CheckBox
         android:id="@+id/checkBox1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/otp1"
-        android:layout_below="@+id/otp1"
+        android:layout_alignLeft="@+id/otp"
+        android:layout_below="@+id/otp"
+        android:layout_marginTop="15dp"
         android:gravity="left"
         android:text="I have read the Terms and conditions governing C-Fence, available at ‘www.xyzbank.com/cfence’ and agree to the same
         "
