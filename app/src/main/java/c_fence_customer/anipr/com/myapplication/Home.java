@@ -314,8 +314,7 @@ public class Home extends ActionBarActivity {
 																							.setStatus(
 																									true);
 																					status = true;
-                                                                                    convertView.setBackgroundColor(getResources().getColor(R.color.card_bg_green));
-																					mSwitch.setImageResource(R.drawable.on_button);
+
                                                                                     card_obj.put(
 																							ParseConstants.status,
 																							status);
@@ -336,6 +335,7 @@ public class Home extends ActionBarActivity {
 																					AlertDialog adialog = bulider
 																							.create();
 																					adialog.show();
+                                                                                    cardsList.invalidateViews();
 																				} else {
 																					if (pDialog
 																							.isShowing()) {
