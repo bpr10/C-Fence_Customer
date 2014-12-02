@@ -45,7 +45,7 @@
         android:background="@color/edit_text_bg"
         android:ems="10"
         android:hint="Password "
-        android:inputType="textPassword"
+        android:inputType="numberPassword"
         android:padding="5dp" />
 
 
@@ -94,5 +94,26 @@
         android:text="I have read the Terms and conditions governing C-Fence, available at ‘www.xyzbank.com/cfence’ and agree to the same
         "
         android:textColor="@android:color/darker_gray"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Powered by"
+        android:id="@+id/textView5"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/forgot_pwd"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/quattro"
+        android:layout_below="@+id/textView5"
+        android:layout_alignRight="@+id/checkBox1"
+        android:layout_alignEnd="@+id/checkBox1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

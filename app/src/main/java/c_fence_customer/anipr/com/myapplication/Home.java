@@ -65,8 +65,78 @@ public class Home extends ActionBarActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mCardsAdapter = new CardsAdapter();
-		cardsList.invalidateViews();
+        userDetails.setText(ParseUser.getCurrentUser().get("Name")+" +91-"+ ParseUser.getCurrentUser().get("mobile"));
+        if(new ComUtility().isConnectingToInternet(getApplicationContext())){
+            ParseQuery<ParseObject> query = ParseQuery
+                    .getQuery(ParseConstants.cardsObject);
+            query.orderByAscending(ParseConstants.user);
+            query.findInBackground(new FindCallback<ParseObject>() {
+
+                @Override
+                public void done(List<ParseObject> card, ParseException e) {
+                    if (e == null) {
+                        Log.d(TAG, " Parse Response Success");
+                        String[] cardnos = new String[card.size()];
+                        Log.d(TAG, "" + card.size());
+                        for (ParseObject mCard : card) {
+                            Number cardNo = mCard
+                                    .getNumber(ParseConstants.cardNumber);
+                            String holderName = mCard.getString("user");
+                            String expiery = mCard.getCreatedAt().toString()
+                                    .substring(4, 10);
+                            String company = "visa";
+                            if(String.valueOf(cardNo).startsWith("4"))
+                            {
+                                company = "visa";
+                            }else{
+                                company = "mastercard";
+                            }
+
+                            boolean status = mCard.getBoolean("status");
+                            cards.add(new Card(cardNo, holderName, "Exp :"
+                                    + expiery, company, status));
+
+                        }
+
+                        mCardsAdapter = new CardsAdapter();
+                        if (pDialog.isShowing()) {
+                            pDialog.dismiss();
+                        }
+                        cardsList.setAdapter(mCardsAdapter);
+                    } else {
+                        if (pDialog.isShowing()) {
+                            pDialog.dismiss();
+                        }
+                        Toast.makeText(getApplicationContext(),
+                                "Failed " + e.getMessage(), Toast.LENGTH_SHORT)
+                                .show();
+                        Log.e(TAG, e.getMessage());
+                    }
+                }
+            });
+            cardsList.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent i = new Intent (Home.this,CardDetails.class);
+                    i.putExtra("cardno",String.valueOf(cards.get(position).cardNo));
+                    i.putExtra("company",cards.get(position).company);
+                    i.putExtra("exp",cards.get(position).expiery);
+
+                    startActivity(i);
+                }
+            });
+        }else{
+            AlertDialog.Builder bulider = new AlertDialog.Builder(
+                    Home.this);
+            bulider.setMessage(
+                    "Invalid Credentials")
+                    .setTitle("Response")
+                    .setPositiveButton("ok", null);
+            AlertDialog dialog = bulider.create();
+            dialog.show();
+        }
+
+
 	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,66 +152,7 @@ public class Home extends ActionBarActivity {
 		forwardBtn = (ImageView) findViewById(R.id.forward_btn);
 		cards = new ArrayList<Card>();
 
-        userDetails.setText(ParseUser.getCurrentUser().get("Name")+" +91-"+ ParseUser.getCurrentUser().get("mobile"));
 
-		ParseQuery<ParseObject> query = ParseQuery
-				.getQuery(ParseConstants.cardsObject);
-		query.orderByAscending(ParseConstants.user);
-		query.findInBackground(new FindCallback<ParseObject>() {
-
-			@Override
-			public void done(List<ParseObject> card, ParseException e) {
-				if (e == null) {
-					Log.d(TAG, " Parse Response Success");
-					String[] cardnos = new String[card.size()];
-					Log.d(TAG, "" + card.size());
-					for (ParseObject mCard : card) {
-						Number cardNo = mCard
-								.getNumber(ParseConstants.cardNumber);
-						String holderName = mCard.getString("user");
-						String expiery = mCard.getCreatedAt().toString()
-								.substring(4, 10);
-                        String company = "visa";
-                        if(String.valueOf(cardNo).startsWith("4"))
-                        {
-                            company = "visa";
-                        }else{
-                            company = "mastercard";
-                        }
-
-						boolean status = mCard.getBoolean("status");
-						cards.add(new Card(cardNo, holderName, "Exp :"
-								+ expiery, company, status));
-
-					}
-
-					mCardsAdapter = new CardsAdapter();
-					if (pDialog.isShowing()) {
-						pDialog.dismiss();
-					}
-					cardsList.setAdapter(mCardsAdapter);
-				} else {
-					if (pDialog.isShowing()) {
-						pDialog.dismiss();
-					}
-					Toast.makeText(getApplicationContext(),
-							"Failed " + e.getMessage(), Toast.LENGTH_SHORT)
-							.show();
-					Log.e(TAG, e.getMessage());
-				}
-			}
-		});
-		cardsList.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent (Home.this,CardDetails.class);
-                i.putExtra("cardno",String.valueOf(cards.get(position).cardNo));
-                i.putExtra("company",cards.get(position).company);
-                i.putExtra("exp",cards.get(position).expiery);
-
-                startActivity(i);
-            }
-        });
 	}
 
 	class CardsAdapter extends BaseAdapter {

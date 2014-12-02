@@ -42,32 +42,46 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if((mobileNo.getText().toString().length()!=0)&&(otp.getText().toString().length()!=0)){
                          if(check.isChecked()){
-                            pDialog = new ProgressDialog(MainActivity.this);
-                            pDialog.setMessage("Please wait...");
-                            pDialog.setCancelable(false);
-                            pDialog.show();
-                            ParseUser.logInInBackground(mobileNo.getText().toString(),otp.getText().toString(),new LogInCallback() {
-                                @Override
-                                public void done(ParseUser parseUser, ParseException e) {
-                                    if(pDialog.isShowing()){
-                                        pDialog.hide();
-                                    }
-                                    if(e==null){
-                                        Intent i = new Intent(MainActivity.this,Home.class);
 
-                                        startActivity(i);
-                                    }else{
-                                        AlertDialog.Builder bulider = new AlertDialog.Builder(
-                                                MainActivity.this);
-                                        bulider.setMessage(
-                                                "Invalid Credentials")
-                                                .setTitle("Response")
-                                                .setPositiveButton("ok", null);
-                                        AlertDialog dialog = bulider.create();
-                                        dialog.show();
+                            if(new ComUtility().isConnectingToInternet(getApplicationContext()))
+                            {
+                                pDialog = new ProgressDialog(MainActivity.this);
+                                pDialog.setMessage("Please wait...");
+                                pDialog.setCancelable(false);
+                                pDialog.show();
+                                ParseUser.logInInBackground(mobileNo.getText().toString(),otp.getText().toString(),new LogInCallback() {
+                                    @Override
+                                    public void done(ParseUser parseUser, ParseException e) {
+                                        if(pDialog.isShowing()){
+                                            pDialog.hide();
+                                        }
+                                        if(e==null){
+                                            Intent i = new Intent(MainActivity.this,Home.class);
+
+                                            startActivity(i);
+                                        }else{
+                                            AlertDialog.Builder bulider = new AlertDialog.Builder(
+                                                    MainActivity.this);
+                                            bulider.setMessage(
+                                                    "Invalid Credentials")
+                                                    .setTitle("Response")
+                                                    .setPositiveButton("ok", null);
+                                            AlertDialog dialog = bulider.create();
+                                            dialog.show();
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            }else{
+                                AlertDialog.Builder bulider = new AlertDialog.Builder(
+                                        MainActivity.this);
+                                bulider.setMessage(
+                                        "Internet Connection not Found.")
+                                        .setTitle("Response")
+                                        .setPositiveButton("ok", null);
+                                AlertDialog dialog = bulider.create();
+                                dialog.show();
+                            }
+
 
                         }else{
                             Toast.makeText(getApplicationContext(), "Please tick the checkbox.", Toast.LENGTH_SHORT).show();
