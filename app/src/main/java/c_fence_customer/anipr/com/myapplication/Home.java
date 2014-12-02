@@ -4,14 +4,12 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.SwitchCompat;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,19 +23,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -152,7 +146,7 @@ public class Home extends ActionBarActivity {
 
 	class CardsAdapter extends BaseAdapter {
         ImageView mSwitch;
-
+        View convertView;
 		@Override
 		public int getCount() {
 
@@ -170,8 +164,8 @@ public class Home extends ActionBarActivity {
 		}
 
 		@Override
-		public View getView(int arg0, View convertView, ViewGroup arg2) {
-
+		public View getView(int arg0, View convertView1, ViewGroup arg2) {
+            this.convertView = convertView1;
 			if (convertView == null) {
 				convertView = LayoutInflater.from(Home.this).inflate(
 						R.layout.card_list_item, null);
@@ -192,7 +186,7 @@ public class Home extends ActionBarActivity {
 					.findViewById(R.id.holder_name);
 			holderName.setText(ParseUser.getCurrentUser().get("Name")+"");
 			TextView expiery = (TextView) convertView
-					.findViewById(R.id.expiery);
+					.findViewById(R.id.expiry);
 			expiery.setText(currentCard.expiery);
             ImageView cardLogo = (ImageView)convertView.findViewById(R.id.card_logo);
             if(currentCard.company.equals("visa"))
@@ -246,6 +240,8 @@ public class Home extends ActionBarActivity {
 																ParseConstants.status,
 																status);
 														card_obj.saveInBackground();
+                                                        convertView.setBackgroundColor(getResources().getColor(R.color.card_bg_red));
+                                                        mSwitch.setImageResource(R.drawable.off_button);
 														bulider.setMessage(
 																"Card Deactivated")
 																.setTitle(
@@ -307,7 +303,9 @@ public class Home extends ActionBarActivity {
 																							.setStatus(
 																									true);
 																					status = true;
-																					card_obj.put(
+                                                                                    convertView.setBackgroundColor(getResources().getColor(R.color.card_bg_green));
+																					mSwitch.setImageResource(R.drawable.on_button);
+                                                                                    card_obj.put(
 																							ParseConstants.status,
 																							status);
 																					card_obj.saveInBackground();
@@ -333,7 +331,8 @@ public class Home extends ActionBarActivity {
 																						pDialog.dismiss();
 																					}
 																					status = false;
-																					mSwitch.setImageResource(R.drawable.off_button);
+                                                                                    convertView.setBackgroundColor(getResources().getColor(R.color.card_bg_red));
+                                                                                    mSwitch.setImageResource(R.drawable.off_button);
                                                                                     AlertDialog.Builder bulider = new AlertDialog.Builder(
                                                                                             Home.this);
                                                                                     bulider.setMessage(

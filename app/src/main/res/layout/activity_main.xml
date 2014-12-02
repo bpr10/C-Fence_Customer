@@ -29,7 +29,7 @@
         android:layout_marginTop="15dp"
         android:background="@color/edit_text_bg"
         android:ems="10"
-        android:hint="Please enter the registered mobile number  "
+        android:hint="Please enter your registered mobile number  "
         android:inputType="number"
         android:padding="5dp" >
     </EditText>

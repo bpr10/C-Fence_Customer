@@ -21,15 +21,13 @@
 
      <ImageView
          android:id="@+id/card_switch"
-         android:layout_width="wrap_content"
-         android:layout_height="50dp"
-         android:layout_alignParentRight="true"
-         android:layout_alignParentTop="true"
-         android:paddingRight = "20dp"
+         android:layout_width="100dp"
+         android:layout_height="wrap_content"
          android:src="@drawable/on_button"
-         android:scaleType="center"
-         android:layout_alignTop="@+id/card_logo"
-         android:textColor="@android:color/white"  />
+         android:scaleType="fitStart"
+         android:layout_alignBottom="@+id/card_no"
+         android:layout_alignParentTop="true"
+         android:layout_alignParentRight="true"/>
 
     <TextView
         android:id="@+id/card_no"
@@ -42,7 +40,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/expiery"
+        android:id="@+id/expiry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/holder_name"
