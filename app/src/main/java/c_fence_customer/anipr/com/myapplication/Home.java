@@ -69,6 +69,7 @@ public class Home extends ActionBarActivity {
         if(new ComUtility().isConnectingToInternet(getApplicationContext())){
             ParseQuery<ParseObject> query = ParseQuery
                     .getQuery(ParseConstants.cardsObject);
+            query.whereEqualTo("mobile", ParseUser.getCurrentUser().get("mobile"));
             query.orderByAscending(ParseConstants.user);
             query.findInBackground(new FindCallback<ParseObject>() {
 
