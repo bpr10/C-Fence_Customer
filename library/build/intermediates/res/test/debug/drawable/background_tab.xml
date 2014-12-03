@@ -5,4 +5,4 @@
     <item android:state_focused="true" android:drawable="@color/background_tab_pressed"/>
     <item android:drawable="@android:color/transparent"/>
 
-</selector><!-- From: file:/E:/AndroidStudioProjects/C-Fence_Customer/library/res/drawable/background_tab.xml --><!-- From: file:/E:/AndroidStudioProjects/C-Fence_Customer/library/build/intermediates/bundles/debug/res/drawable/background_tab.xml -->
+</selector><!-- From: file:/G:/AndroidStudio/AndroidStudioProjects/C-Fence_Customer/library/res/drawable/background_tab.xml --><!-- From: file:/G:/AndroidStudio/AndroidStudioProjects/C-Fence_Customer/library/build/intermediates/bundles/debug/res/drawable/background_tab.xml -->

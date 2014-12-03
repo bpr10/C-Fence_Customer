@@ -42,32 +42,40 @@ public class CardDetails extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_card_details);
-        TextView user = (TextView)findViewById(R.id.user_name);
-        user.setText(ParseUser.getCurrentUser().get("Name")+" +91-"+ ParseUser.getCurrentUser().get("mobile"));
-        TextView holder_name = (TextView)findViewById(R.id.holder_name);
-        holder_name.setText(ParseUser.getCurrentUser().get("Name")+"");
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        mPagerSlidingTabStrip.setBackgroundColor(getResources().getColor(R.color.card_bg_green));
-        mPagerSlidingTabStrip.setIndicatorColor(getResources().getColor(R.color.green));
-        mFragmentPageAdapter = new FragmentPageAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(mFragmentPageAdapter);
-        mPagerSlidingTabStrip.setViewPager(viewPager);
-        cardNo = getIntent().getStringExtra("cardno");
-        company = getIntent().getStringExtra("company");
-        String exp = getIntent().getStringExtra("exp");
-        ImageView cardLogo = (ImageView)findViewById(R.id.card_logo);
-        if(company.equals("visa"))
-        {
-            cardLogo.setImageResource(R.drawable.visa);
+        if(ParseUser.getCurrentUser()!=null){
+            TextView user = (TextView)findViewById(R.id.user_name);
+            user.setText(ParseUser.getCurrentUser().get("Name")+" +91-"+ ParseUser.getCurrentUser().get("mobile"));
+            TextView holder_name = (TextView)findViewById(R.id.holder_name);
+            holder_name.setText(ParseUser.getCurrentUser().get("Name")+"");
+            viewPager = (ViewPager) findViewById(R.id.pager);
+            mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+            mPagerSlidingTabStrip.setBackgroundColor(getResources().getColor(R.color.card_bg_green));
+            mPagerSlidingTabStrip.setIndicatorColor(getResources().getColor(R.color.green));
+            mFragmentPageAdapter = new FragmentPageAdapter(getSupportFragmentManager());
+            viewPager.setAdapter(mFragmentPageAdapter);
+            mPagerSlidingTabStrip.setViewPager(viewPager);
+            cardNo = getIntent().getStringExtra("cardno");
+            company = getIntent().getStringExtra("company");
+            String exp = getIntent().getStringExtra("exp");
+            ImageView cardLogo = (ImageView)findViewById(R.id.card_logo);
+            if(company.equals("visa"))
+            {
+                cardLogo.setImageResource(R.drawable.visa);
+            }else{
+                cardLogo.setImageResource(R.drawable.mastercard);
+            }
+            TextView cardNumber = (TextView) findViewById(R.id.card_no);
+            cardNumber.setText("************"
+                    + cardNo.substring(12,16));
+            TextView expiry = (TextView) findViewById(R.id.expiry);
+            expiry.setText(exp);
+
         }else{
-            cardLogo.setImageResource(R.drawable.mastercard);
+            Intent i = new Intent(this, MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
         }
-        TextView cardNumber = (TextView) findViewById(R.id.card_no);
-        cardNumber.setText("************"
-                + cardNo.substring(12,16));
-        TextView expiry = (TextView) findViewById(R.id.expiry);
-        expiry.setText(exp);
 
 	}
 

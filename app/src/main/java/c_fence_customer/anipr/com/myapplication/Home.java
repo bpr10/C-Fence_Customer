@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
 import android.util.Log;
@@ -62,101 +63,109 @@ public class Home extends ActionBarActivity {
 			e.printStackTrace();
 		}		super.onStart();
 	}
-	@Override
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+        Log.d(TAG, "OnCreate");
+
+
+    }
+    @Override
 	protected void onResume() {
 		super.onResume();
-        userDetails.setText(ParseUser.getCurrentUser().get("Name")+" +91-"+ ParseUser.getCurrentUser().get("mobile"));
-        if(new ComUtility().isConnectingToInternet(getApplicationContext())){
-            ParseQuery<ParseObject> query = ParseQuery
-                    .getQuery(ParseConstants.cardsObject);
-            query.whereEqualTo("mobile", ParseUser.getCurrentUser().get("mobile"));
-            query.orderByAscending(ParseConstants.user);
-            query.findInBackground(new FindCallback<ParseObject>() {
+        pDialog = new ProgressDialog(Home.this);
+        pDialog.setMessage("Please wait...");
+        pDialog.setCancelable(false);
+        pDialog.show();
+        cardsList = (ListView) findViewById(R.id.cards_list);
+        userDetails = (TextView) findViewById(R.id.user_name);
+        forwardBtn = (ImageView) findViewById(R.id.forward_btn);
+        cards = new ArrayList<Card>();
+        cards.clear();
+        if(ParseUser.getCurrentUser()!=null){
+            userDetails.setText(ParseUser.getCurrentUser().get("Name")+" +91-"+ ParseUser.getCurrentUser().get("mobile"));
+            if(new ComUtility().isConnectingToInternet(getApplicationContext())){
+                ParseQuery<ParseObject> query = ParseQuery
+                        .getQuery(ParseConstants.cardsObject);
+                query.whereEqualTo("mobile", ParseUser.getCurrentUser().get("mobile"));
+                query.orderByAscending(ParseConstants.user);
+                query.findInBackground(new FindCallback<ParseObject>() {
 
-                @Override
-                public void done(List<ParseObject> card, ParseException e) {
-                    if (e == null) {
-                        Log.d(TAG, " Parse Response Success");
-                        String[] cardnos = new String[card.size()];
-                        Log.d(TAG, "" + card.size());
-                        for (ParseObject mCard : card) {
-                            Number cardNo = mCard
-                                    .getNumber(ParseConstants.cardNumber);
-                            String holderName = mCard.getString("user");
-                            String expiery = mCard.getCreatedAt().toString()
-                                    .substring(4, 10);
-                            String company = "visa";
-                            if(String.valueOf(cardNo).startsWith("4"))
-                            {
-                                company = "visa";
-                            }else{
-                                company = "mastercard";
+                    @Override
+                    public void done(List<ParseObject> card, ParseException e) {
+                        if (e == null) {
+                            Log.d(TAG, " Parse Response Success");
+                            String[] cardnos = new String[card.size()];
+                            Log.d(TAG, "" + card.size());
+                            for (ParseObject mCard : card) {
+                                Number cardNo = mCard
+                                        .getNumber(ParseConstants.cardNumber);
+                                String holderName = mCard.getString("user");
+                                String expiery = mCard.get("cardExpiry").toString().substring(0,2)+"/"+mCard.get("cardExpiry").toString().substring(2, 6);
+                                String company = "visa";
+                                if(String.valueOf(cardNo).startsWith("4"))
+                                {
+                                    company = "visa";
+                                }else{
+                                    company = "mastercard";
+                                }
+
+                                boolean status = mCard.getBoolean("status");
+                                cards.add(new Card(cardNo, holderName, "Exp :"
+                                        + expiery, company, status));
+
                             }
 
-                            boolean status = mCard.getBoolean("status");
-                            cards.add(new Card(cardNo, holderName, "Exp :"
-                                    + expiery, company, status));
-
+                            mCardsAdapter = new CardsAdapter();
+                            if (pDialog.isShowing()) {
+                                pDialog.dismiss();
+                            }
+                            cardsList.setAdapter(mCardsAdapter);
+                        } else {
+                            if (pDialog.isShowing()) {
+                                pDialog.dismiss();
+                            }
+                            Toast.makeText(getApplicationContext(),
+                                    "Failed " + e.getMessage(), Toast.LENGTH_SHORT)
+                                    .show();
+                            Log.e(TAG, e.getMessage());
                         }
-
-                        mCardsAdapter = new CardsAdapter();
-                        if (pDialog.isShowing()) {
-                            pDialog.dismiss();
-                        }
-                        cardsList.setAdapter(mCardsAdapter);
-                    } else {
-                        if (pDialog.isShowing()) {
-                            pDialog.dismiss();
-                        }
-                        Toast.makeText(getApplicationContext(),
-                                "Failed " + e.getMessage(), Toast.LENGTH_SHORT)
-                                .show();
-                        Log.e(TAG, e.getMessage());
                     }
-                }
-            });
-            cardsList.setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent i = new Intent (Home.this,CardDetails.class);
-                    i.putExtra("cardno",String.valueOf(cards.get(position).cardNo));
-                    i.putExtra("company",cards.get(position).company);
-                    i.putExtra("exp",cards.get(position).expiery);
+                });
+                cardsList.setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent i = new Intent (Home.this,CardDetails.class);
+                        i.putExtra("cardno",String.valueOf(cards.get(position).cardNo));
+                        i.putExtra("company",cards.get(position).company);
+                        i.putExtra("exp",cards.get(position).expiery);
 
-                    startActivity(i);
-                }
-            });
+                        startActivity(i);
+                    }
+                });
+            }else{
+                AlertDialog.Builder bulider = new AlertDialog.Builder(
+                        Home.this);
+                bulider.setMessage(
+                        "Invalid Credentials")
+                        .setTitle("Response")
+                        .setPositiveButton("ok", null);
+                AlertDialog dialog = bulider.create();
+                dialog.show();
+            }
         }else{
-            AlertDialog.Builder bulider = new AlertDialog.Builder(
-                    Home.this);
-            bulider.setMessage(
-                    "Invalid Credentials")
-                    .setTitle("Response")
-                    .setPositiveButton("ok", null);
-            AlertDialog dialog = bulider.create();
-            dialog.show();
+            Intent i = new Intent(this, MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
         }
 
 
-	}
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_home);
-		Log.d(TAG, "OnCreate");
-		pDialog = new ProgressDialog(Home.this);
-		pDialog.setMessage("Please wait...");
-		pDialog.setCancelable(false);
-		pDialog.show();
-		cardsList = (ListView) findViewById(R.id.cards_list);
-		userDetails = (TextView) findViewById(R.id.user_name);
-		forwardBtn = (ImageView) findViewById(R.id.forward_btn);
-		cards = new ArrayList<Card>();
-
 
 	}
-
-	class CardsAdapter extends BaseAdapter {
+class CardsAdapter extends BaseAdapter {
         ImageView mSwitch;
         View convertView;
 		@Override
