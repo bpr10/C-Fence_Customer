@@ -44,7 +44,7 @@ public class CardDetails extends ActionBarActivity {
 		setContentView(R.layout.activity_card_details);
         if(ParseUser.getCurrentUser()!=null){
             TextView user = (TextView)findViewById(R.id.user_name);
-            user.setText(ParseUser.getCurrentUser().get("Name")+" +91-"+ ParseUser.getCurrentUser().get("mobile"));
+            user.setText(ParseUser.getCurrentUser().get("Name")+"");
             TextView holder_name = (TextView)findViewById(R.id.holder_name);
             holder_name.setText(ParseUser.getCurrentUser().get("Name")+"");
             viewPager = (ViewPager) findViewById(R.id.pager);

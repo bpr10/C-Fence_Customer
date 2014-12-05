@@ -85,7 +85,7 @@ public class Home extends ActionBarActivity {
         cards = new ArrayList<Card>();
         cards.clear();
         if(ParseUser.getCurrentUser()!=null){
-            userDetails.setText(ParseUser.getCurrentUser().get("Name")+" +91-"+ ParseUser.getCurrentUser().get("mobile"));
+            userDetails.setText(ParseUser.getCurrentUser().get("Name")+"");
             if(new ComUtility().isConnectingToInternet(getApplicationContext())){
                 ParseQuery<ParseObject> query = ParseQuery
                         .getQuery(ParseConstants.cardsObject);
